@@ -1,0 +1,18 @@
+--- origsrc/MediaInfo/Project/GNU/CLI/Makefile.am	2012-05-11 02:49:42.000000000 -0500
++++ src/MediaInfo/Project/GNU/CLI/Makefile.am	2012-05-31 23:10:24.131998300 -0500
+@@ -9,4 +9,4 @@ mediainfo_SOURCES = \
+ 
+ #mediainfo_LDFLAGS     = -no-undefined -version-info 0:0:0
+ 
+-INCLUDES = -I../../../Source -I../../../../MediaInfoLib/Source -I../../../../ZenLib/Source
+\ No newline at end of file
++INCLUDES = -I$(srcdir)/../../../Source -I../../../../MediaInfoLib/Source -I../../../../ZenLib/Source
+--- origsrc/MediaInfo/Project/GNU/GUI/Makefile.am	2012-05-11 02:49:42.000000000 -0500
++++ src/MediaInfo/Project/GNU/GUI/Makefile.am	2012-05-31 23:27:05.967215200 -0500
+@@ -22,4 +22,4 @@ mediainfo_gui_SOURCES = \
+ 
+ #mediainfo-gui_LDFLAGS     = -no-undefined -version-info 0:0:0
+ 
+-INCLUDES = -I../../../Source -I../../../../MediaInfoLib/Source -I../../../../ZenLib/Source
+\ No newline at end of file
++INCLUDES = -I$(srcdir)/../../../Source -I../../../../MediaInfoLib/Source -I../../../../ZenLib/Source
