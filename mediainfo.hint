@@ -1,5 +1,0 @@
-category: Audio Video
-requires: libgcc1 libmediainfo0 libstdc++6 libzen0
-sdesc: "Displays data for multimedia files (command-line interface)"
-ldesc: "MediaInfo is a convenient unified display of the most relevant 
-technical and tag data for video and audio files."

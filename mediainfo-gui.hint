@@ -1,6 +1,0 @@
-category: Audio Video
-requires: libgcc1 libmediainfo0 libstdc++6 libwx_baseu2.8_0 libwx_gtk2u2.8_0 libzen0
-external-source: mediainfo
-sdesc: "Displays data for multimedia files (graphical interface)"
-ldesc: "MediaInfo is a convenient unified display of the most relevant 
-technical and tag data for video and audio files."

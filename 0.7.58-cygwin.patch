@@ -20,3 +20,37 @@
  //---------------------------------------------------------------------------
  class GUI_Main_Easy_Core;
  //---------------------------------------------------------------------------
+--- origsrc/MediaInfoLib/Source/MediaInfo/MediaInfo_Events.h	2012-05-11 02:50:31.000000000 -0500
++++ src/MediaInfoLib/Source/MediaInfo/MediaInfo_Events.h	2012-05-31 22:37:38.087129100 -0500
+@@ -193,7 +193,7 @@
+ /* The callback function                                                   */
+ /***************************************************************************/
+ 
+-#if !defined(__WINDOWS__)
++#if !defined(__WINDOWS__) && !defined(__stdcall)
+     #define __stdcall
+ #endif //!defined(__WINDOWS__)
+ 
+
+--- origsrc/ZenLib/Source/ZenLib/int128s.cpp	2012-05-11 02:57:24.000000000 -0500
++++ src/ZenLib/Source/ZenLib/int128s.cpp	2012-05-31 22:13:59.181951100 -0500
+@@ -60,7 +60,7 @@
+     defined (__FreeBSD__)    || defined (__OpenBSD__)   || \
+     defined (__NetBSD__)     || defined (__DragonFly__) || \
+     defined (__sparc__)      || defined (__sparc64__)   || \
+-    defined (__SUNPRO_CC)
++    defined (__SUNPRO_CC)    || defined (__CYGWIN__)
+     #define fmodl fmod
+ #endif
+ using namespace std;
+--- origsrc/ZenLib/Source/ZenLib/int128u.cpp	2012-05-11 02:57:24.000000000 -0500
++++ src/ZenLib/Source/ZenLib/int128u.cpp	2012-05-31 22:14:17.686800900 -0500
+@@ -60,7 +60,7 @@
+     defined (__FreeBSD__)    || defined (__OpenBSD__)   || \
+     defined (__NetBSD__)     || defined (__DragonFly__) || \
+     defined (__sparc__)      || defined (__sparc64__)   || \
+-    defined (__SUNPRO_CC)
++    defined (__SUNPRO_CC)    || defined (__CYGWIN__)
+     #define fmodl fmod
+ #endif
+ using namespace std;

@@ -1,0 +1,73 @@
+WX_VERSION=2.8
+inherit wxwidgets
+
+NAME="mediainfo"
+VERSION=0.7.61
+RELEASE=1
+CATEGORY="Audio Video"
+SUMMARY="Displays multimedia file information"
+DESCRIPTION="MediaInfo is a convenient unified display of the most relevant
+technical and tag data for video and audio files."
+HOMEPAGE="http://mediainfo.sourceforge.net/"
+SRC_URI="mirror://sourceforge/mediainfo/mediainfo_${VERSION}.tar.bz2
+         mirror://sourceforge/mediainfo/libmediainfo_${VERSION}.tar.bz2
+         mirror://sourceforge/zenlib/libzen_0.4.28.tar.bz2"
+SRC_DIR=.
+PATCH_URI="0.7.58-cygwin.patch  0.7.58-vpath.patch"
+
+PKG_NAMES="${PN} ${PN}-gui"
+mediainfo_CONTENTS="usr/bin/mediainfo.exe usr/share/doc/${PN}/*CLI*"
+mediainfo_gui_CONTENTS="usr/bin/mediainfo-gui.exe usr/share/applications/
+                        usr/share/doc/${PN}/*GUI* usr/share/pixmaps/"
+
+src_compile() {
+	local subdir
+
+	subdir="ZenLib/Project/GNU/Library"
+	CYGCONF_SOURCE="${S}/${subdir}"
+	cd ${CYGCONF_SOURCE}
+	cygautoreconf
+	mkdir -p ${B}/${subdir}
+	cd ${B}/${subdir}
+	cygconf --disable-shared
+	cygmake
+
+	subdir="MediaInfoLib/Project/GNU/Library"
+	CYGCONF_SOURCE="${S}/${subdir}"
+	cd ${CYGCONF_SOURCE}
+	cygautoreconf
+	mkdir -p ${B}/${subdir}
+	cd ${B}/${subdir}
+	cygconf --disable-shared --with-libcurl --with-libmms
+	cygmake
+
+	subdir="MediaInfo/Project/GNU/CLI"
+	CYGCONF_SOURCE="${S}/${subdir}"
+	cd ${CYGCONF_SOURCE}
+	cygautoreconf
+	mkdir -p ${B}/${subdir}
+	cd ${B}/${subdir}
+	cygconf
+	cygmake
+
+	subdir="MediaInfo/Project/GNU/GUI"
+	CYGCONF_SOURCE="${S}/${subdir}"
+	cd ${CYGCONF_SOURCE}
+	cygautoreconf
+	mkdir -p ${B}/${subdir}
+	cd ${B}/${subdir}
+	cygconf --with-wx-config=${WX_CONFIG}
+	cygmake
+}
+
+src_install() {
+	cd ${B}/MediaInfo/Project/GNU/CLI
+	cyginstall
+	cd ${B}/MediaInfo/Project/GNU/GUI
+	cyginstall
+
+	doicon ${S}/MediaInfo/Source/Resource/Image/MediaInfo.png
+	make_desktop_entry mediainfo-gui MediaInfo MediaInfo "AudioVideo;GTK"
+}
+
+DOCS="MediaInfo/History*.txt MediaInfo/Release/ReadMe*Linux.txt"
