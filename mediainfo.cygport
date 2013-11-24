@@ -2,7 +2,7 @@ WX_VERSION=2.8
 inherit wxwidgets
 
 NAME="mediainfo"
-VERSION=0.7.63
+VERSION=0.7.65
 RELEASE=1
 CATEGORY="Audio Video"
 SUMMARY="Displays multimedia file information"
