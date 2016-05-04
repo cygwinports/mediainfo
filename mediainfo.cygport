@@ -2,7 +2,7 @@ WX_VERSION=2.8
 inherit qt4-qmake wxwidgets
 
 NAME="mediainfo"
-VERSION=0.7.82
+VERSION=0.7.85
 RELEASE=1
 CATEGORY="Audio Video"
 SUMMARY="Displays multimedia file information"
@@ -12,7 +12,7 @@ HOMEPAGE="http://mediaarea.net/"
 SRC_URI="
 	http://mediaarea.net/download/source/mediainfo/${VERSION}/mediainfo_${VERSION}.tar.xz
 	http://mediaarea.net/download/source/libmediainfo/${VERSION}/libmediainfo_${VERSION}.tar.xz
-	http://mediaarea.net/download/source/libzen/0.4.32/libzen_0.4.32.tar.bz2
+	http://mediaarea.net/download/source/libzen/0.4.33/libzen_0.4.33.tar.bz2
 "
 SRC_DIR=.
 
@@ -22,7 +22,6 @@ mediainfo_CONTENTS="
 	usr/share/doc/${NAME}/*CLI*
 "
 mediainfo_gui_CONTENTS="
-	etc/postinstall/
 	usr/bin/mediainfo-gui.exe
 	usr/share/appdata/mediainfo-gui.appdata.xml
 	usr/share/applications/mediainfo-gui.desktop
