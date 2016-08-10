@@ -2,7 +2,7 @@ WX_VERSION=2.8
 inherit qt4-qmake wxwidgets
 
 NAME="mediainfo"
-VERSION=0.7.85
+VERSION=0.7.87
 RELEASE=1
 CATEGORY="Audio Video"
 SUMMARY="Displays multimedia file information"
