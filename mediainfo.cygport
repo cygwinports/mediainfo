@@ -2,75 +2,68 @@ WX_VERSION=2.8
 inherit qt4-qmake wxwidgets
 
 NAME="mediainfo"
-VERSION=0.7.87
+VERSION=0.7.91
 RELEASE=1
 CATEGORY="Audio Video"
 SUMMARY="Displays multimedia file information"
 DESCRIPTION="MediaInfo is a convenient unified display of the most relevant
 technical and tag data for video and audio files."
 HOMEPAGE="http://mediaarea.net/"
-SRC_URI="
-	http://mediaarea.net/download/source/mediainfo/${VERSION}/mediainfo_${VERSION}.tar.xz
-	http://mediaarea.net/download/source/libmediainfo/${VERSION}/libmediainfo_${VERSION}.tar.xz
-	http://mediaarea.net/download/source/libzen/0.4.33/libzen_0.4.33.tar.bz2
-"
-SRC_DIR=.
+SRC_URI="http://mediaarea.net/download/source/mediainfo/${VERSION}/mediainfo_${VERSION}.tar.xz"
+SRC_DIR="MediaInfo"
+PATCH_URI="http://pkgs.fedoraproject.org/cgit/rpms/mediainfo.git/plain/mediainfo-qt.patch"
 
-PKG_NAMES="${NAME} ${NAME}-gui"
+PKG_NAMES="${NAME} ${NAME}-gui ${NAME}-qt"
+mediainfo_DOCS="LICENSE README.md Release/ReadMe_CLI_Linux.txt"
 mediainfo_CONTENTS="
 	usr/bin/mediainfo.exe
-	usr/share/doc/${NAME}/*CLI*
 "
+mediainfo_gui_DOCS="LICENSE README.md Release/ReadMe_GUI_Linux.txt"
 mediainfo_gui_CONTENTS="
 	usr/bin/mediainfo-gui.exe
 	usr/share/appdata/mediainfo-gui.appdata.xml
 	usr/share/applications/mediainfo-gui.desktop
-	usr/share/doc/${NAME}/*GUI*
-	usr/share/pixmaps/mediainfo.png
+	usr/share/pixmaps/mediainfo.xpm
+"
+mediainfo_qt_DOCS="LICENSE README.md Release/ReadMe_GUI_Linux.txt"
+mediainfo_qt_CONTENTS="
+	usr/bin/mediainfo-qt.exe
+	usr/share/applications/mediainfo-qt.desktop
+	usr/share/pixmaps/mediainfo-qt.png
 "
 
 src_compile() {
-	local subdir
-
 	lndirs
 
-	subdir="ZenLib/Project/GNU/Library"
-	cd ${B}/${subdir}
-	cygautoreconf
-	CYGCONF_SOURCE=. \
-	cygconf --disable-shared
-	cygmake
-
-	subdir="MediaInfoLib/Project/GNU/Library"
-	cd ${B}/${subdir}
-	cygautoreconf
-	CYGCONF_SOURCE=. \
-	cygconf --disable-shared --with-libcurl --with-libtinyxml2 --without-libmms
-	cygmake
-
-	subdir="MediaInfo/Project/GNU/CLI"
-	cd ${B}/${subdir}
+	cd ${B}/Project/GNU/CLI
 	cygautoreconf
 	CYGCONF_SOURCE=. \
 	cygconf
 	cygmake
 
-	subdir="MediaInfo/Project/GNU/GUI"
-	cd ${B}/${subdir}
+	cd ${B}/Project/GNU/GUI
 	cygautoreconf
 	CYGCONF_SOURCE=. \
 	cygconf --with-wx-config=${WX_CONFIG}
 	cygmake
+
+	cd ${B}/Project/QMake/GUI
+	cygqmake4 .
+	cygmake
 }
 
 src_install() {
-	cd ${B}/MediaInfo/Project/GNU/CLI
+	cd ${B}/Project/GNU/CLI
 	cyginstall
-	cd ${B}/MediaInfo/Project/GNU/GUI
+	cd ${B}/Project/GNU/GUI
 	cyginstall
 	domenu mediainfo-gui.desktop
+	cd ${B}/Project/QMake/GUI
+	qt4_qmake_install
+	sed -e 's/gui/qt/;/^Name/s/$/ Qt/;/^Icon/s/$/-qt/' \
+		../../GNU/GUI/mediainfo-gui.desktop > mediainfo-qt.desktop
+	domenu mediainfo-qt.desktop
 
-	newicon ${S}/MediaInfo/Source/Resource/Image/MediaInfo.png mediainfo.png
+	newicon ${S}/Source/Resource/Image/MediaInfo.png mediainfo-qt.png
+	newicon ${S}/Source/Resource/Image/MediaInfo.xpm mediainfo.xpm
 }
-
-DOCS="MediaInfo/History*.txt MediaInfo/Release/ReadMe*Linux.txt"
