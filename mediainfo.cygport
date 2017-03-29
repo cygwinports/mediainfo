@@ -1,8 +1,9 @@
-WX_VERSION=2.8
+WX_VERSION=3.0
+WX_TOOLKIT=gtk2
 inherit qt4-qmake wxwidgets
 
 NAME="mediainfo"
-VERSION=0.7.91
+VERSION=0.7.93
 RELEASE=1
 CATEGORY="Audio Video"
 SUMMARY="Displays multimedia file information"
@@ -20,16 +21,22 @@ mediainfo_CONTENTS="
 "
 mediainfo_gui_DOCS="LICENSE README.md Release/ReadMe_GUI_Linux.txt"
 mediainfo_gui_CONTENTS="
+	etc/postinstall/
 	usr/bin/mediainfo-gui.exe
 	usr/share/appdata/mediainfo-gui.appdata.xml
 	usr/share/applications/mediainfo-gui.desktop
-	usr/share/pixmaps/mediainfo.xpm
+	usr/share/icons/hicolor/*/apps/mediainfo.*
 "
 mediainfo_qt_DOCS="LICENSE README.md Release/ReadMe_GUI_Linux.txt"
 mediainfo_qt_CONTENTS="
 	usr/bin/mediainfo-qt.exe
 	usr/share/applications/mediainfo-qt.desktop
-	usr/share/pixmaps/mediainfo-qt.png
+	usr/share/pixmaps/mediainfo.*
+"
+# KDE 4 integration
+PKG_IGNORE="
+	usr/share/apps/konqueror/servicemenus/mediainfo-gui.desktop
+	usr/share/kde4/services/ServiceMenus/mediainfo-gui.desktop
 "
 
 src_compile() {
@@ -57,13 +64,11 @@ src_install() {
 	cyginstall
 	cd ${B}/Project/GNU/GUI
 	cyginstall
-	domenu mediainfo-gui.desktop
 	cd ${B}/Project/QMake/GUI
 	qt4_qmake_install
-	sed -e 's/gui/qt/;/^Name/s/$/ Qt/;/^Icon/s/$/-qt/' \
+	sed -e 's/gui/qt/;/^Name/s/$/ Qt/' \
 		../../GNU/GUI/mediainfo-gui.desktop > mediainfo-qt.desktop
 	domenu mediainfo-qt.desktop
 
-	newicon ${S}/Source/Resource/Image/MediaInfo.png mediainfo-qt.png
-	newicon ${S}/Source/Resource/Image/MediaInfo.xpm mediainfo.xpm
+	newicon ${S}/Source/Resource/Image/MediaInfo.png mediainfo.png
 }
