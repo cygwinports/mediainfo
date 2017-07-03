@@ -3,7 +3,7 @@ WX_TOOLKIT=gtk2
 inherit qt4-qmake wxwidgets
 
 NAME="mediainfo"
-VERSION=0.7.93
+VERSION=0.7.96
 RELEASE=1
 CATEGORY="Audio Video"
 SUMMARY="Displays multimedia file information"
