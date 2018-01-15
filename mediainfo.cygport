@@ -3,7 +3,7 @@ WX_TOOLKIT=gtk2
 inherit qt4-qmake wxwidgets
 
 NAME="mediainfo"
-VERSION=0.7.96
+VERSION=17.12
 RELEASE=1
 CATEGORY="Audio Video"
 SUMMARY="Displays multimedia file information"
@@ -12,7 +12,10 @@ technical and tag data for video and audio files."
 HOMEPAGE="http://mediaarea.net/"
 SRC_URI="http://mediaarea.net/download/source/mediainfo/${VERSION}/mediainfo_${VERSION}.tar.xz"
 SRC_DIR="MediaInfo"
-PATCH_URI="http://pkgs.fedoraproject.org/cgit/rpms/mediainfo.git/plain/mediainfo-qt.patch"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/rpms/mediainfo.git/plain/mediainfo-qt.patch
+	http://pkgs.fedoraproject.org/cgit/rpms/mediainfo.git/plain/mediainfo-fix-command-line-argument-parsing.patch
+"
 
 PKG_NAMES="${NAME} ${NAME}-gui ${NAME}-qt"
 mediainfo_DOCS="LICENSE README.md Release/ReadMe_CLI_Linux.txt"
@@ -23,9 +26,10 @@ mediainfo_gui_DOCS="LICENSE README.md Release/ReadMe_GUI_Linux.txt"
 mediainfo_gui_CONTENTS="
 	etc/postinstall/
 	usr/bin/mediainfo-gui.exe
-	usr/share/appdata/mediainfo-gui.appdata.xml
 	usr/share/applications/mediainfo-gui.desktop
 	usr/share/icons/hicolor/*/apps/mediainfo.*
+	usr/share/kservices5/ServiceMenus/mediainfo-gui.desktop
+	usr/share/metainfo/mediainfo-gui.metainfo.xml
 "
 mediainfo_qt_DOCS="LICENSE README.md Release/ReadMe_GUI_Linux.txt"
 mediainfo_qt_CONTENTS="
@@ -33,7 +37,7 @@ mediainfo_qt_CONTENTS="
 	usr/share/applications/mediainfo-qt.desktop
 	usr/share/pixmaps/mediainfo.*
 "
-# KDE 4 integration
+# KDE 3/4 integration
 PKG_IGNORE="
 	usr/share/apps/konqueror/servicemenus/mediainfo-gui.desktop
 	usr/share/kde4/services/ServiceMenus/mediainfo-gui.desktop
